@@ -1,0 +1,26 @@
+body {height: 100%;}
+.header {height: 10%;}
+.menu{height:5%;}
+.data-section {height: 20%;}
+.footer {height:5%;}
+.stat {font-size:4em;}
+.measure {font-size:1em;font-family: Verdana;}
+
+/* generated from coolors.co */
+.scheme-dark {background-color: #161925;color:#5B5D66}
+.scheme-mid {background-color: #33658A !important;color:#6F93AD}
+.scheme-light {background-color: #E1DD8F;color:#6F7669}
+.scheme-alt {background-color: #8E3B46;color:#DBC1C5}
+.scheme-orange { background-color: #FC4C02; color:#FEC9B2 }
+
+.scheme-invert-dark {color: #161925;background-color:#5B5D66}
+.scheme-invert-mid {color: #33658A;background-color:#6F93AD}
+.scheme-invert-light {color: #E1DD8F;background-color:#6F7669}
+.scheme-invert-alt {color: #8E3B46;background-color:#DBC1C5}
+.scheme-invert-orange { color: #FC4C02; background-color:#FEC9B2 }
+
+.scheme-txt-dark {color: #161925}
+.scheme-txt-mid {color: #33658A}
+.scheme-txt-light {color: #E1DD8F}
+.scheme-txt-alt {color: #8E3B46}
+.scheme-txt-orange { color: #FC4C02}
