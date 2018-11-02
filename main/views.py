@@ -25,6 +25,7 @@ def private(request):
 
 def dashboard(request):
     athlete_id = request.GET.get('id')
+    view = request.GET.get('view')
     athlete = datastore.get_user(athlete_id)
 
     if athlete is None:
@@ -34,10 +35,16 @@ def dashboard(request):
         return render(request,"private.html")
 
     activities = api.get_athlete_activities(athlete.bearer,athlete.last_logon_date)
+
     if len(activities) > 0:
         get_sements_from_activities(athlete,activities)
 
-    efforts = datastore.get_efforts(athlete)
+
+    if view == "frequent":
+        efforts = datastore.get_frequent(athlete)
+    else:
+        efforts = datastore.get_efforts(athlete)
+
     datastore.update_last_logon(athlete)
 
     return render(request,"dashboard.html",{"athlete": athlete, "efforts" : efforts})

@@ -17,7 +17,7 @@ def get_athlete_activities(bearer, lastLogon):
 
     epocc = lastLogon.timestamp()
     url = "https://www.strava.com/api/v3/athlete/activities?after=" + str(epocc) + "&per_page=10"
-    #url = "https://www.strava.com/api/v3/athlete/activities?per_page=5"
+    #url = "https://www.strava.com/api/v3/athlete/activities?per_page=10"
     return get(url,bearer)
 
 def get_activity(bearer,activity_id):

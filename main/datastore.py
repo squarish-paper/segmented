@@ -85,6 +85,13 @@ def get_efforts(athlete):
     except Efforts.DoesNotExist:
         return None
 
+def get_frequent(athlete):
+    print("[DATASTORE] | get_efforts | " )
+    try:
+        efforts = Efforts.objects.filter(athlete=athlete).order_by('-efforts')[:10]
+        return efforts
+    except Efforts.DoesNotExist:
+        return None
 
 def convertAthlete(jsonAthlete):
     athlete = Athlete()
