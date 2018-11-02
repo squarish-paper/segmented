@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <script type="text/javascript" src="{% static "js/auth.js" %}"></script>
+
+HELLO
+
+<body>
+  <p>Connect with Strava</p>
+  <p><a onclick="Auth.authorise()" id="btnAuth"><img src="{% static "img/btn_strava_connectwith_orange.png" %}"  alt="connect" class="w3-image" /></a></p>
+</body>
+{% endblock %}
