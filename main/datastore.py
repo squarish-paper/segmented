@@ -1,4 +1,5 @@
 from .models import Athlete
+from .models import Activities
 from .models import Segment
 from .models import Efforts
 from datetime import datetime
@@ -77,6 +78,39 @@ def save_segment(athlete,detailedSegment,leaderboard):
         print("[DATASTORE] | save_segment | new effort | " )
         effort.save()
 
+def update_segment(athlete,segment,leaderboard,new_time):
+
+    try:
+        segment = Segment.objects.get(segment_id=detailedSegment['id'])
+        segment.total_athletes = leaderboard['effort_count']
+        segment.top_time = leaderboard["entries"][0]["elapsed_time"]
+        entries = len(leaderboard["entries"])
+        segment.tenth_time = leaderboard["entries"][entries-6]["elapsed_time"]
+        segment.refresh_date = datetime.now()
+        print("[DATASTORE] | update_segment | segment | " + str(detailedSegment['id'] ))
+        segment.save()
+    except Segment.DoesNotExist:
+        pass
+
+    try:
+        effort = Efforts.objects.get(athlete=athlete,segment=segment)
+        if effort.pb > new_time:
+            effort.pb = new_time
+        effort.efforts += 1
+        effort.rank = getRank(athlete,leaderboard)
+        print("[DATASTORE] | update_segment | effort ")
+        effort.save()
+    except Efforts.DoesNotExist:
+        pass
+
+def get_segment(segment_id):
+    print("[DATASTORE] | get_segment | " )
+    try:
+        segment = Segments.objects.filter(segment_id=segment_id)
+        return segment
+    except Efforts.DoesNotExist:
+        return None
+
 def get_efforts(athlete):
     print("[DATASTORE] | get_efforts | " )
     try:
@@ -92,6 +126,22 @@ def get_frequent(athlete):
         return efforts
     except Efforts.DoesNotExist:
         return None
+
+def save_activity(athlete, activity_id):
+    print("[DATASTORE] | save_activity | " )
+    activities = Activities()
+    activities.athlete = athlete
+    activities.activity_id = activity_id
+    activities.save()
+
+def get_activity(athlete, activity_id):
+    print("[DATASTORE] | get_activity | " )
+    try:
+        activities = Activities.objects.filter(athlete=athlete, activity_id=activity_id)
+        return activities
+    except Efforts.DoesNotExist:
+        return None
+
 
 def convertAthlete(jsonAthlete):
     athlete = Athlete()

@@ -37,7 +37,7 @@ def dashboard(request):
     activities = api.get_athlete_activities(athlete.bearer,athlete.last_logon_date)
 
     if len(activities) > 0:
-        get_sements_from_activities(athlete,activities)
+        get_segments_from_activities(athlete,activities)
 
 
     if view == "frequent":
@@ -50,16 +50,26 @@ def dashboard(request):
     return render(request,"dashboard.html",{"athlete": athlete, "efforts" : efforts})
 
 
-def get_sements_from_activities(athlete, activities):
+def get_segments_from_activities(athlete, activities):
     for activity in activities:
         activity_id = activity["id"]
-        # save xref
+
+        # check if activity has already been retreived
+        activity_xref = get_activity(athlete, activity_id)
+        if activity_xref is not None:
+            return
 
         detailedActivity = api.get_activity(athlete.bearer,activity_id)
         segments = detailedActivity["segment_efforts"]
 
         for segment in segments:
             segment_id = segment["segment"]["id"]
-            detailedSegment = api.get_segment(athlete.bearer,segment_id)
             leaderboard = api.get_segment_leaderboard(athlete.bearer,segment_id)
-            datastore.save_segment(athlete,detailedSegment,leaderboard)
+
+            # check if segment already exists
+            db_segment = datastore.get_segment(segment_id)
+            if db_segment is not None:
+                detailedSegment = api.get_segment(athlete.bearer,segment_id)
+                datastore.save_segment(athlete,detailedSegment,leaderboard)
+            else:
+                datastore.update_segment(athlete,db_segment,leaderboard,segment["elapsed_time"])

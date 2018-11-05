@@ -5,14 +5,14 @@ class Athlete(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
     auth_date = models.DateTimeField("date authed", auto_now_add=True)
-    last_logon_date = models.DateTimeField("last logon", auto_now_add=True)
+    last_logon_date = models.DateTimeField("last logon")
     bearer = models.TextField()
     public = models.BooleanField()
     picture_url = models.TextField()
     user_name = models.TextField()
 
 class Activities(models.Model):
-    strava_id = models.IntegerField()
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     activity_id = models.IntegerField()
 
 class Segment(models.Model):
