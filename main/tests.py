@@ -1,19 +1,30 @@
-from django.contrib.auth.models import AnonymousUser, User
 from django.test import TestCase, RequestFactory
 
-from .views import index
+from main import views
+from main import models
+#from main.views import index
 
+class ModelsTest(TestCase):
 
-class SimpleTest(TestCase):
-    def setUp(self):
-        # Every test needs access to the request factory.
-        self.factory = RequestFactory()
+    def test_athlete_string_representation(self):
+        athlete = models.Athlete(strava_id=118515,first_name="Jim",last_name="Jones")
+        self.assertEqual(str(athlete), "Jim Jones")
 
-    def test_details(self):
-        # Create an instance of a GET request.
-        request = self.factory.get("/")
-        request.user = AnonymousUser()
+    def test_segment_string_representation(self):
+        segment = models.Segment(segment_id=18150,name="LONG HILL SECTION",distance=150)
+        self.assertEqual(str(segment), "18150 LONG HILL SECTION")
 
-        # Test my_view() as if it were deployed at /customer/details
-        response = index(request)
-        self.assertEqual(response.status_code, 200)
+#class ViewsTests(TestCase):
+#    def setUp(self):
+#        self.factory = RequestFactory()
+#
+#    def test_index(self):
+#        request = self.factory.get("/")
+#        response = views.index(request)
+#        self.assertEqual(response.status_code, 200)
+#        print(response.templates)
+
+#    def test_auth(self):
+#        request = self.factory.get("/auth?code=123&state=456")
+#        response = views.index(request)
+#        self.assertRedirects(response, '/accounts/login/?next=/sekrit/')

@@ -11,6 +11,9 @@ class Athlete(models.Model):
     picture_url = models.TextField()
     user_name = models.TextField()
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 class Activities(models.Model):
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     activity_id = models.IntegerField()
@@ -26,6 +29,9 @@ class Segment(models.Model):
     top_time = models.IntegerField()
     tenth_time = models.IntegerField()
     refresh_date = models.DateTimeField("date refreshed", auto_now_add=True)
+
+    def __str__(self):
+        return str(self.segment_id) + " " + self.name
 
 class Efforts(models.Model):
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
