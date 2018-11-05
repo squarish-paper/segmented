@@ -54,6 +54,7 @@ Functionally, these are the tings it should do
 - [ ] "Starred" - get user starred segments
 - [ ] "Opportunities" - get segments that there is a chance to get into top 10
 - [ ] "Threats" - Any KOMs that are very close to being lost
+- [x] "Frequent" - Get most oftenly completed segments
 - [ ] Manual Refresh
 - [ ] Table Sorting
 - [ ] Segment Searching

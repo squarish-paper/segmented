@@ -29,10 +29,10 @@ def dashboard(request):
     athlete = datastore.get_user(athlete_id)
 
     if athlete is None:
-        return render(request,"connect.html")
+        return redirect("/connect")
 
     if athlete.public is False:
-        return render(request,"private.html")
+        return redirect("/private")
 
     activities = api.get_athlete_activities(athlete.bearer,athlete.last_logon_date)
 
